@@ -1,26 +1,51 @@
 /*
  Project 2 - Array of Objects
- Name: 
+ Name: Sara Ali
  Comments: 
  */
 
-/*** 
- * Please see the full assignment instructions in COMP 125 on Sakai (or under the "Markdown" tab)
- * Make an array of objects of the same type. Start by creating an object constructor funciton. Test it with individual object instances. Then create an array and initialize it with objects created from your constructor.
- * Use the draw() function to display and move your objects independently on the canvas.
-***/
+function MyClass(tempX, tempY) {
+  this.x = tempX;
+  this.y = tempY;
+  this.d = 50;
+  this.speedX = random(-1, 1);
+  this.speedY = random(-1, 1);
 
-// Global Variables go here
+  this.move = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x > width || this.x < 0){
+      this.speedX *= -1;
+    }
+    if (this.y > height || this.y < 0){
+      this.speedY *= -1;
+    }
+  }
+
+  this.display = function() {
+    push();
+    translate(this.x, this.y);
+    fill(255, 0, 0);
+    ellipse(0, 0, this.d, this.d);
+    pop();
+  }
+}
+
+var objects = new Array(10);
 
 function setup(){
-  // this function will run once
-  createCanvas(600, 400); // create a 600 x 400 pixel drawing canvas
+  createCanvas(600, 400);
 
-
+  for(var i = 0; i < objects.length; i++) {
+    objects[i] = new MyClass(random(width), random(height));
+  }
 }
 
 function draw(){
-  background(200); //light gray background
+  background(200);
   
+  for(var i = 0; i < objects.length; i++){
+    objects[i].move();
+    objects[i].display();
+  }
 }
-
